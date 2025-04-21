@@ -4,17 +4,28 @@
 
 Supports both HashLink and JS output thanks to [WebIDL](https://github.com/ncannasse/webidl)
 
-## Compilation
+## Instructions for building for HL on Windows
 
-Download the Bullet sources and put them in hashlink/src/bullet directory.
-Then run `make gen_hl`
-Then open an compile `bullet.sln`
-
-Requires having hashlink one level upper than bullet directory, such as:
-
+1. Set up the environment
 ```
-/hashlink
-/libs
-   /bullet
+git clone https://github.com/nspitko/bullet.git
+git clone https://github.com/bulletphysics/bullet3.git ./bullet/src/bullet
+haxelib dev bullet bullet
+haxelib git webidl https://github.com/nspitko/webidl.git
 ```
+
+2. Generate the HL shim
+```
+cd bullet
+haxe -lib webidl --macro "bullet.Generator.generateCpp()"
+move bullet.cpp src/
+```
+	
+3. Open bullet.sln (if it asks you to upgrade toolset, click OK). Press `Ctrl+Shift+B` and wait for it to build.
+
+4. Copy the generated bullet.hdll from x64/Release or x64/Debug into your HashLink folder with the other hdlls.
+
+5. Optional: Test if it works by running `haxe build.hxml -lib heaps -lib hldx --cmd dummy.hl`
+
+TODO: instructions for JS as well
 
