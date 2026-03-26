@@ -1,5 +1,7 @@
 
 -lib webidl
+-lib heaps
+-lib hldx
 -cp sample/
 -main Main
 -hl dummy.hl
